@@ -1,0 +1,26 @@
+crear una base de datos 
+
+luego  crear  tabla USUARIOS - para guardar los datos del registro
+atributos:
+- nombres,
+- apellidos,
+- direccion,
+- correo electronico,
+- contraseña, 
+
+- id: Un identificador único para cada usuario, que se autoincrementa.
+- nombres: Almacena los nombres del usuario.
+- apellidos: Almacena los apellidos del usuario.
+- direccion: Almacena la dirección del usuario.
+- correo_electronico: Almacena el correo electrónico del usuario.
+- contrasena: Almacena la contraseña del usuario.
+
+codigo sql:
+CREATE TABLE USUARIOS (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombres VARCHAR(50),
+    apellidos VARCHAR(50),
+    direccion VARCHAR(50),
+    correo_electronico VARCHAR(50),
+    contrasena VARCHAR(50)
+);
