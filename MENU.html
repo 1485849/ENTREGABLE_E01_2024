@@ -13,7 +13,7 @@
     }
         
         /* Estilos para el menú de navegación */
-        nav {
+        header {
             background-color: #333;
             color: #b1f392;
             padding:40px 80px;
@@ -22,21 +22,21 @@
         h2{
             font-size: 40px;
         }
-        nav ul {
+        header ul {
             list-style-type: none;
             margin: 50;
             padding: 0;
         }
-        nav ul li {
+        header ul li {
             display: inline;
-            margin-right: 100px;
+            margin-right: 50px;
         }
-        nav ul li a {
+        header ul li a {
             color: #fff;
             text-decoration: none;
             font-size: 25px;     /*tamaño de letra*/
         }
-        nav ul li a:hover {
+        header ul li a:hover {
             text-decoration: underline;
         }
 
@@ -50,7 +50,56 @@
             background-image: url('img/ferreteria.jpg');                /* Reemplaza 'ruta/a/la/imagen.jpg' con la ruta de tu imagen */
             background-size: cover;                                /* Para cubrir todo el fondo */
             background-position: center;                           /*  centrar  la imagen de fondo */
-            height: 500px;                                          /* Altura de la sección de la imagen */
+            height: 700px;                                          /* Altura de la sección de la imagen */
+        }
+           .form-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            background-color: rgba(255, 255, 255, 0.719); /* Cambiar la opacidad según desees */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos para los formularios */
+        form {
+            max-width: 300px;
+            margin: 0 auto;
+            background: #f2f2f2;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        h3 {
+            color: #ffffff;
         }
 
          /* Estilos para los iconos de redes sociales */
@@ -66,29 +115,93 @@
             font-size: 24px;
             margin: 0 10px;
         }
-        h3 {
+        h4 {
             color: #fff; 
         }
-        h4{
+        h5{
             color: #fff;
             font-size: 25px;
         }
+
     </style>
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-
-<nav>
+<header>
     <ul>
         <h2>FERRETERIA "EL TORNILLO FELIZ"</h2>
-        <li><a href="#registro">Registro</a></li>
-        <li><a href="#iniciar_sesion">Iniciar Sesión</a></li>
-        <li><a href="#catalogo">Catálogo de Productos</a></li>
+        <li><a href="#" onclick="mostrarFormulario('registroForm')">Registro</a></li>
+        <li><a href="#" onclick="mostrarFormulario('inicioSesionForm')">Iniciar Sesión</a></li>
+
     </ul>
-</nav>
+</header>
 
 <div class="background-image">
     <!-- Aquí puedes colocar cualquier contenido adicional que desees mostrar debajo del menú -->
+<div id="registroFormContainer" style="display: none;">
+    <h3>Formulario de Registro</h3>
+    <form id="registroForm" action="guardar_registro.php" method="post" onsubmit="return procesarFormulario()">
+        
+        <label for="nombres">Nombres:</label>
+        <input type="text" id="nombres" name="nombres" required>
+
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" name="apellidos" required>
+
+        <label for="direccion">Dirección:</label>
+        <input type="text" id="direccion" name="direccion">
+
+        <label for="correo_electronico">Correo Electrónico:</label>
+        <input type="email" id="correo_electronico" name="correo_electronico" required>
+
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" name="telefono">
+   
+        <label for="contraseña">Contraseña:</label>
+        <input type="password" id="contraseña" name="contraseña" required>
+        
+        <!-- Campo oculto para almacenar la contraseña hash -->
+        <input type="hidden" id="hashed_password" name="hashed_password" value="">
+
+        <input type="submit" value="Registrar">
+    </form>
+</div>
+
+<div id="inicioSesionFormContainer" style="display: none;">
+    <h3>Formulario de Inicio de Sesión</h3>
+    <form id="inicioSesionForm" action="procesar_inicio_sesion.php" method="post" onsubmit="return procesarInicioSesion()">
+        <label for="correo_electronico">Correo Electrónico:</label>
+        <input type="email" id="correo_electronico" name="correo_electronico" required>
+
+        <label for="contraseña">Contraseña:</label>
+        <input type="password" id="contraseña" name="contraseña" required>
+
+        <input type="submit" value="Iniciar Sesión">
+    </form>
+</div>
+</div>
+
+<script>
+    function mostrarFormulario(formularioId) {
+        // Ocultar todos los formularios
+        document.getElementById('registroFormContainer').style.display = 'none';
+        document.getElementById('inicioSesionFormContainer').style.display = 'none';
+
+        // Mostrar el formulario seleccionado
+        document.getElementById(formularioId + 'Container').style.display = 'block';
+    }
+
+    // Resto del código de los formularios y funciones ya proporcionadas...
+
+    // Función para hash de contraseña antes de enviar el formulario de registro
+    document.getElementById('registroForm').addEventListener('submit', function() {
+        var contraseña = document.getElementById('contraseña').value;
+        var hashed_password = document.getElementById('hashed_password');
+        hashed_password.value = btoa(unescape(encodeURIComponent(contraseña)));
+    });
+</script>
+
+
 </div>
 
 <div class="social-icons">
@@ -96,8 +209,8 @@
     <a href="https://twitter.com/i/flow/login"><i class="fab fa-twitter"></i></a>
     <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
     <a href="https://api.whatsapp.com/send?phone=NUMERO_DE_TELEFONO"><i class="fab fa-whatsapp"></i></a>
-    <h3>Direccion: Av. Juan Velazco N° 144</h3>
-    <h4>“Confía en nuestra experiencia para el éxito de tus proyectos” </h4>
+    <h4>Direccion: Av. Juan Velazco N° 144</h4>
+    <h5>“Confía en nuestra experiencia para el éxito de tus proyectos” </h5>
 </div>
 
 

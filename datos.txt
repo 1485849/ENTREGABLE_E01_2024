@@ -15,12 +15,49 @@ atributos:
 - correo_electronico: Almacena el correo electrónico del usuario.
 - contrasena: Almacena la contraseña del usuario.
 
+-- Creación de la tabla usuarios
+
 codigo sql:
-CREATE TABLE USUARIOS (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE usuarios (
+    idusuarios INT AUTO_INCREMENT PRIMARY KEY,
     nombres VARCHAR(50),
     apellidos VARCHAR(50),
     direccion VARCHAR(50),
     correo_electronico VARCHAR(50),
-    contrasena VARCHAR(50)
+    telefono VARCHAR(9),
+    contraseña VARCHAR(50)
 );
+
+-- Creación de la tabla Productos
+CREATE TABLE Productos (
+    IdProducto INT PRIMARY KEY AUTO_INCREMENT,
+    Codigo VARCHAR(20) NOT NULL,
+    Nombre VARCHAR(50) NOT NULL,
+    Descripcion VARCHAR(50) NOT NULL,
+    Precio DECIMAL(10,2) NOT NULL,
+    Categoria VARCHAR(50) NOT NULL,
+    Stock INT NOT NULL,
+    Imagen VARCHAR(50) NULL
+);
+
+-- Creación de la tabla Pedidos
+CREATE TABLE Pedidos (
+    IdPedido INT PRIMARY KEY AUTO_INCREMENT,
+    Idusuarios INT NOT NULL,
+    FechaPedido DATETIME NOT NULL,
+    Total DECIMAL(10,2) NOT NULL,
+    Estado VARCHAR(50) NOT NULL,
+    FOREIGN KEY (Idusuarios) REFERENCES usuarios(Idusuarios)
+);
+
+-- Creación de la tabla DetallePedido
+CREATE TABLE DetallePedido (
+    IdDetallePedido INT PRIMARY KEY AUTO_INCREMENT,
+    IdPedido INT NOT NULL,
+    IdProducto INT NOT NULL,
+    Cantidad INT NOT NULL,
+    Precio DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (IdPedido) REFERENCES Pedidos(IdPedido),
+    FOREIGN KEY (IdProducto) REFERENCES Productos(IdProducto)
+);
+
